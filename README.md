@@ -1,3 +1,25 @@
+# Vibe Project
+
+A minimal React + TypeScript project using Vite.
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Build
+
+To create a production build:
+```bash
+npm run build
+```
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
