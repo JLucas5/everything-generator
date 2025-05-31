@@ -1,4 +1,4 @@
-# Vibe Project
+# Everything Generator
 
 A simple React project made with Vite. This app was created to practice using the Copilot Agent and serves as a fun and practical name generator for multiple uses. Whether you need a name for your new pet, newborn baby, D&D character, villain, or NPC, this app has you covered! More name generation options are coming with frequent updates.
 
