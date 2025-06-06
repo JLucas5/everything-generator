@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { nameGenerationOptions } from './nameGenerationOptions';
 import NameGenerator from './components/NameGenerator';
+import { ToastProvider } from './components/ToastService';
 
 function capitalizeWords(str: string): string {
 	return str.split(' ').map(word => 
@@ -32,39 +33,41 @@ function App() {
 		nameGenerationOptions.find((opt) => opt.value === selectedOption)?.label || '';
 
 	return (
-		<div className="app-container">
-			<button 
-				className="mobile-menu-toggle" 
-				onClick={toggleMobileMenu}
-				aria-label="Toggle menu"
-				aria-expanded={isMobileMenuOpen}
-			>
-				<div className="hamburger-icon">
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</button>
-			<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
-				<h2>Name Generators</h2>
-				<div className="generator-options">
-					{nameGenerationOptions.map((opt) => (
-						<button
-							key={opt.value}
-							className={`option-button ${selectedOption === opt.value ? 'active' : ''}`}
-							onClick={() => handleOptionClick(opt.value)}
-						>
-							{capitalizeWords(opt.label)}
-						</button>
-					))}
-				</div>
-			</aside>
-			<main className="main-content">
-				<h1>{capitalizeWords(selectedLabel)} Generator</h1>
-				<NameGenerator nameGroups={selectedGroups} />
-			</main>
-			{isMobileMenuOpen && <div className="overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
-		</div>
+		<ToastProvider>
+			<div className="app-container">
+				<button 
+					className="mobile-menu-toggle" 
+					onClick={toggleMobileMenu}
+					aria-label="Toggle menu"
+					aria-expanded={isMobileMenuOpen}
+				>
+					<div className="hamburger-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</button>
+				<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
+					<h2>Name Generators</h2>
+					<div className="generator-options">
+						{nameGenerationOptions.map((opt) => (
+							<button
+								key={opt.value}
+								className={`option-button ${selectedOption === opt.value ? 'active' : ''}`}
+								onClick={() => handleOptionClick(opt.value)}
+							>
+								{capitalizeWords(opt.label)}
+							</button>
+						))}
+					</div>
+				</aside>
+				<main className="main-content">
+					<h1>{capitalizeWords(selectedLabel)} Generator</h1>
+					<NameGenerator nameGroups={selectedGroups} />
+				</main>
+				{isMobileMenuOpen && <div className="overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
+			</div>
+		</ToastProvider>
 	);
 }
 

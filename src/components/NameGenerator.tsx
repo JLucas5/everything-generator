@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useToast } from './ToastService';
+import './NameGenerator.css';
 
 interface NameGeneratorProps {
   nameGroups: string[][];
@@ -32,6 +34,7 @@ function generateUniqueNames(nameGroups: string[][], count: number): string[] {
 export default function NameGenerator({ nameGroups }: NameGeneratorProps) {
   const [generatedNames, setGeneratedNames] = useState<string[]>([]);
   const [nameCount, setNameCount] = useState(1);
+  const { showToast } = useToast();
 
   const handleCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setNameCount(parseInt(e.target.value));
@@ -40,6 +43,15 @@ export default function NameGenerator({ nameGroups }: NameGeneratorProps) {
   const handleGenerate = () => {
     const names = generateUniqueNames(nameGroups, nameCount);
     setGeneratedNames(names);
+  };
+
+  const handleNameClick = async (name: string) => {
+    try {
+      await navigator.clipboard.writeText(name);
+      showToast('Name copied!');
+    } catch (err) {
+      showToast('Failed to copy name');
+    }
   };
 
   return (
@@ -62,13 +74,18 @@ export default function NameGenerator({ nameGroups }: NameGeneratorProps) {
         </button>
       </div>
       {generatedNames.length > 0 && (
-        <ul className="generated-names-list">
+        <div className="generated-names-container">
           {generatedNames.map((name, index) => (
-            <li key={index} className="generated-name">
+            <p 
+              key={index} 
+              className="generated-name"
+              onClick={() => handleNameClick(name)}
+              title="Click to copy"
+            >
               {name}
-            </li>
+            </p>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
