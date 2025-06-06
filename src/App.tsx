@@ -47,7 +47,7 @@ function App() {
 						<span></span>
 					</div>
 				</button>
-				<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
+				<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`} data-testid="sidebar">
 					<h2>Name Generators</h2>
 					<div className="generator-options">
 						{nameGenerationOptions.map((opt) => (

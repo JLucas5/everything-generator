@@ -74,7 +74,7 @@ export default function NameGenerator({ nameGroups }: NameGeneratorProps) {
         </button>
       </div>
       {generatedNames.length > 0 && (
-        <div className="generated-names-container">
+        <div className="generated-names-container" data-testid="names-container">
           {generatedNames.map((name, index) => (
             <p 
               key={index} 
