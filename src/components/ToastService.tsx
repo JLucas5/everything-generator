@@ -1,9 +1,8 @@
-import { createContext, useContext, useState, useCallback } from 'react';
-import type { ReactNode } from 'react';
-import './Toast.css';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import './ToastService.css';
 
 interface Toast {
-  id: number;
+  id: string;
   message: string;
 }
 
@@ -11,30 +10,18 @@ interface ToastContextType {
   showToast: (message: string) => void;
 }
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
+const ToastContext = createContext<ToastContextType | null>(null);
 
-export function useToast() {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToast must be used within a ToastProvider');
-  }
-  return context;
-}
+let nextId = 0;
 
-interface ToastProviderProps {
-  children: ReactNode;
-}
-
-export function ToastProvider({ children }: ToastProviderProps) {
+export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const showToast = useCallback((message: string) => {
-    const id = Date.now();
+    const id = `toast-${nextId++}`;
     setToasts(prev => [...prev, { id, message }]);
-
-    // Remove toast after 3 seconds
     setTimeout(() => {
-      setToasts(prev => prev.filter(toast => toast.id !== id));
+      setToasts(prev => prev.filter(t => t.id !== id));
     }, 3000);
   }, []);
 
@@ -50,4 +37,12 @@ export function ToastProvider({ children }: ToastProviderProps) {
       </div>
     </ToastContext.Provider>
   );
+}
+
+export function useToast() {
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider');
+  }
+  return context;
 } 
