@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { nameGenerationOptions } from './nameGenerationOptions';
-import NameGenerator from './Components/NameGenerator';
+import NameGenerator from './components/NameGenerator';
 
 function App() {
 	const [selectedOption, setSelectedOption] = useState(
