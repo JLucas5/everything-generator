@@ -1,3 +1,4 @@
+/* Base Layout */
 #root {
   margin: 0;
   padding: 0;
@@ -11,48 +12,7 @@
   position: relative;
 }
 
-/* Mobile Menu Toggle Button */
-.mobile-menu-toggle {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1000;
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-}
-
-.hamburger-icon {
-  width: 24px;
-  height: 18px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hamburger-icon span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background-color: #333;
-  transition: all 0.3s ease;
-}
-
-/* Overlay for mobile menu */
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-}
-
+/* Sidebar Styles */
 .sidebar {
   width: 250px;
   background-color: #ffffff;
@@ -78,6 +38,7 @@
   flex-shrink: 0;
 }
 
+/* Generator Options */
 .generator-options {
   display: flex;
   flex-direction: column;
@@ -130,6 +91,7 @@
   transform: translateX(4px);
 }
 
+/* Main Content Area */
 .main-content {
   flex-grow: 1;
   padding: 2rem;
@@ -151,15 +113,18 @@
   font-size: 2.5rem;
 }
 
+/* Logo Styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -179,6 +144,7 @@
   }
 }
 
+/* Card and Documentation Styles */
 .card {
   padding: 2em;
 }
@@ -187,6 +153,7 @@
   color: #888;
 }
 
+/* Name Generator Specific Styles */
 .name-generator {
   display: flex;
   flex-direction: column;
@@ -262,23 +229,64 @@
 }
 
 .generated-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  margin: 0;
-  padding: 1rem;
   background-color: white;
-  border-radius: 8px;
+  padding: 1rem;
+  border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #333;
 }
 
 .generated-name:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive styles */
+/* Mobile Menu Styles */
+.mobile-menu-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  transition: all 0.3s ease;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
@@ -287,11 +295,11 @@
   .sidebar {
     transform: translateX(-100%);
     width: 80%;
-    max-width: 300px;
+    max-width: 250px;
   }
 
   .sidebar h2 {
-    margin-top: 3.5rem;
+    font-size: 1.1rem;
   }
 
   .sidebar.open {
@@ -301,12 +309,10 @@
   .main-content {
     margin-left: 0;
     width: 100%;
-    padding: 1rem;
   }
 
   .main-content h1 {
     font-size: 2rem;
-    margin-top: 3rem;
   }
 
   .overlay {
@@ -325,11 +331,9 @@
   .name-count-select,
   .generate-button {
     width: 100%;
-    margin: 0.5rem 0;
   }
 
   .generated-name {
-    font-size: 1.2rem;
-    padding: 0.75rem;
+    font-size: 1rem;
   }
 }
