@@ -3,33 +3,48 @@ import './App.css';
 import { nameGenerationOptions } from './nameGenerationOptions';
 import NameGenerator from './components/NameGenerator';
 
+function capitalizeWords(str: string): string {
+	return str.split(' ').map(word => 
+		word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+	).join(' ');
+}
+
 function App() {
 	const [selectedOption, setSelectedOption] = useState(
 		nameGenerationOptions[0].value
 	);
 
-	const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedOption(e.target.value);
+	const handleOptionClick = (value: string) => {
+		setSelectedOption(value);
 	};
 
 	const selectedGroups =
 		nameGenerationOptions.find((opt) => opt.value === selectedOption)
 			?.getGroups() || [];
 
+	const selectedLabel =
+		nameGenerationOptions.find((opt) => opt.value === selectedOption)?.label || '';
+
 	return (
-		<div>
-			<h1>Welcome to Vibe Project</h1>
-			<label htmlFor="nameType">Choose name type: </label>
-			<select id="nameType" value={selectedOption} onChange={handleSelect}>
-				{nameGenerationOptions.map((opt) => (
-					<option key={opt.value} value={opt.value}>
-						{opt.label}
-					</option>
-				))}
-			</select>
-			{selectedOption && (
+		<div className="app-container">
+			<aside className="sidebar">
+				<h2>Name Types</h2>
+				<div className="generator-options">
+					{nameGenerationOptions.map((opt) => (
+						<button
+							key={opt.value}
+							className={`option-button ${selectedOption === opt.value ? 'active' : ''}`}
+							onClick={() => handleOptionClick(opt.value)}
+						>
+							{capitalizeWords(opt.label)}
+						</button>
+					))}
+				</div>
+			</aside>
+			<main className="main-content">
+				<h1>{capitalizeWords(selectedLabel)} Generator</h1>
 				<NameGenerator nameGroups={selectedGroups} />
-			)}
+			</main>
 		</div>
 	);
 }

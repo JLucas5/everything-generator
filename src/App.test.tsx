@@ -21,7 +21,6 @@ describe('App Component', () => {
 
   test('selector contains all name generation options', () => {
     render(<App />);
-    const selector = screen.getByRole('combobox');
     const options = screen.getAllByRole('option');
     
     // Check if all options are rendered

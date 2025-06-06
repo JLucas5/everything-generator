@@ -11,19 +11,64 @@ function getRandom(arr: string[]) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function generateUniqueName(nameGroups: string[][]): string {
+  const parts = nameGroups.map(group => getRandom(group));
+  return parts.join(' ');
+}
+
+function generateUniqueNames(nameGroups: string[][], count: number): string[] {
+  const names = new Set<string>();
+  let attempts = 0;
+  const maxAttempts = count * 10; // Prevent infinite loops if unique names are hard to generate
+
+  while (names.size < count && attempts < maxAttempts) {
+    names.add(generateUniqueName(nameGroups));
+    attempts++;
+  }
+
+  return Array.from(names);
+}
+
 export default function NameGenerator({ nameGroups }: NameGeneratorProps) {
-  const [generatedName, setGeneratedName] = useState('');
+  const [generatedNames, setGeneratedNames] = useState<string[]>([]);
+  const [nameCount, setNameCount] = useState(1);
+
+  const handleCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setNameCount(parseInt(e.target.value));
+  };
 
   const handleGenerate = () => {
-    const parts = nameGroups.map(group => getRandom(group));
-    setGeneratedName(parts.join(' '));
+    const names = generateUniqueNames(nameGroups, nameCount);
+    setGeneratedNames(names);
   };
 
   return (
-    <div>
-      <button onClick={handleGenerate}>Generate name</button>
-      {generatedName && (
-        <p style={{ marginTop: '1rem', fontWeight: 'bold' }}>{generatedName}</p>
+    <div className="name-generator">
+      <div className="generator-controls">
+        <select
+          value={nameCount}
+          onChange={handleCountChange}
+          className="name-count-select"
+          aria-label="Number of names to generate"
+        >
+          {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+            <option key={num} value={num}>
+              {num}
+            </option>
+          ))}
+        </select>
+        <button className="generate-button" onClick={handleGenerate}>
+          Generate names
+        </button>
+      </div>
+      {generatedNames.length > 0 && (
+        <ul className="generated-names-list">
+          {generatedNames.map((name, index) => (
+            <li key={index} className="generated-name">
+              {name}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

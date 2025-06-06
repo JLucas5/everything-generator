@@ -4,7 +4,7 @@ import dogNamesData from './names/dogNames.json';
 
 export const nameGenerationOptions = [
   {
-    label: 'Human name',
+    label: 'Human names',
     value: 'human',
     getGroups: () => humanNamesData as string[][],
   },
