@@ -13,9 +13,15 @@ function App() {
 	const [selectedOption, setSelectedOption] = useState(
 		nameGenerationOptions[0].value
 	);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	const handleOptionClick = (value: string) => {
 		setSelectedOption(value);
+		setIsMobileMenuOpen(false); // Close menu after selection on mobile
+	};
+
+	const toggleMobileMenu = () => {
+		setIsMobileMenuOpen(!isMobileMenuOpen);
 	};
 
 	const selectedGroups =
@@ -27,8 +33,20 @@ function App() {
 
 	return (
 		<div className="app-container">
-			<aside className="sidebar">
-				<h2>Name Types</h2>
+			<button 
+				className="mobile-menu-toggle" 
+				onClick={toggleMobileMenu}
+				aria-label="Toggle menu"
+				aria-expanded={isMobileMenuOpen}
+			>
+				<div className="hamburger-icon">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</button>
+			<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
+				<h2>Name Generators</h2>
 				<div className="generator-options">
 					{nameGenerationOptions.map((opt) => (
 						<button
@@ -45,6 +63,7 @@ function App() {
 				<h1>{capitalizeWords(selectedLabel)} Generator</h1>
 				<NameGenerator nameGroups={selectedGroups} />
 			</main>
+			{isMobileMenuOpen && <div className="overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
 		</div>
 	);
 }
