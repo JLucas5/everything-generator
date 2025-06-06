@@ -15,6 +15,7 @@ function App() {
 		nameGenerationOptions[0].value
 	);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
 
 	const handleOptionClick = (value: string) => {
 		setSelectedOption(value);
@@ -24,6 +25,10 @@ function App() {
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen);
 	};
+
+	const filteredOptions = nameGenerationOptions.filter(opt =>
+		opt.label.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	const selectedGroups =
 		nameGenerationOptions.find((opt) => opt.value === selectedOption)
@@ -49,8 +54,18 @@ function App() {
 				</button>
 				<aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''}`} data-testid="sidebar">
 					<h2>Name Generators</h2>
+					<div className="search-container">
+						<input
+							type="text"
+							placeholder="Search generators..."
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							className="search-input"
+							aria-label="Search name generators"
+						/>
+					</div>
 					<div className="generator-options">
-						{nameGenerationOptions.map((opt) => (
+						{filteredOptions.map((opt) => (
 							<button
 								key={opt.value}
 								className={`option-button ${selectedOption === opt.value ? 'active' : ''}`}

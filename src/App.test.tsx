@@ -104,4 +104,37 @@ describe('App Component', () => {
     // Menu should close
     expect(sidebar.className).not.toContain('open');
   });
+
+  test('search input filters name generators', () => {
+    renderWithToast(<App />);
+    const searchInput = screen.getByPlaceholderText('Search generators...');
+    
+    // Initially all options should be visible
+    expect(screen.getByText('Human Names')).toBeInTheDocument();
+    expect(screen.getByText('Cat Names')).toBeInTheDocument();
+    expect(screen.getByText('Dog Names')).toBeInTheDocument();
+    
+    // Filter for "cat"
+    fireEvent.change(searchInput, { target: { value: 'cat' } });
+    
+    // Only Cat Names should be visible
+    expect(screen.queryByText('Human Names')).not.toBeInTheDocument();
+    expect(screen.getByText('Cat Names')).toBeInTheDocument();
+    expect(screen.queryByText('Dog Names')).not.toBeInTheDocument();
+  });
+
+  test('search is case insensitive', () => {
+    renderWithToast(<App />);
+    const searchInput = screen.getByPlaceholderText('Search generators...');
+    
+    // Search with different cases
+    fireEvent.change(searchInput, { target: { value: 'CAT' } });
+    expect(screen.getByText('Cat Names')).toBeInTheDocument();
+    
+    fireEvent.change(searchInput, { target: { value: 'cat' } });
+    expect(screen.getByText('Cat Names')).toBeInTheDocument();
+    
+    fireEvent.change(searchInput, { target: { value: 'CaT' } });
+    expect(screen.getByText('Cat Names')).toBeInTheDocument();
+  });
 }); 
